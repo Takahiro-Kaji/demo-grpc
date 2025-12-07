@@ -1,0 +1,5 @@
+rootProject.name = 'demo-grpc'
+
+include 'data-layer'
+include 'domain-layer'
+

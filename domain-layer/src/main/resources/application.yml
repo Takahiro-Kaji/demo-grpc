@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: domain-layer
+
+grpc:
+  client:
+    data-layer:
+      address: 'static://localhost:9090'
+      negotiationType: plaintext
+
+logging:
+  level:
+    com.demo.grpc: DEBUG
+    org.springframework: INFO
+

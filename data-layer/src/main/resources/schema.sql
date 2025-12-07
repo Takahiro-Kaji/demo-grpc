@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS users (
+    user_id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+INSERT INTO users (user_id, name, email) VALUES
+('user-001', '山田太郎', 'yamada@example.com'),
+('user-002', '佐藤花子', 'sato@example.com'),
+('user-003', '鈴木一郎', 'suzuki@example.com');
+

@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package com.demo.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.demo.grpc.proto";
+option java_outer_classname = "UserProto";
+
+// User情報を表すメッセージ
+message User {
+  string user_id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// ユーザー取得リクエスト
+message GetUserRequest {
+  string user_id = 1;
+}
+
+// ユーザー取得レスポンス
+message GetUserResponse {
+  User user = 1;
+}
+
+// ユーザー一覧取得リクエスト
+message ListUsersRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+// ユーザー一覧取得レスポンス
+message ListUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+}
+
+// UserServiceの定義
+service UserService {
+  // ユーザー取得（Unary RPC）
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  
+  // ユーザー一覧取得（Unary RPC）
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+}
+
