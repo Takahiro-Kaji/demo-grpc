@@ -6,8 +6,8 @@ Spring Boot + gRPC のデモプロジェクトです。記事の内容に基づ�
 
 このプロジェクトは以下の2つのレイヤーで構成されています：
 
-- **データ層（data-layer）**: gRPCサーバ + MyBatis + H2 Database
-- **ドメイン層（domain-layer）**: REST API + gRPCクライアント
+- **データ層（data-layer）**: gRPCサーバ + MyBatis + MySQL
+- **ドメイン層（domain-layer）**: REST API + gRPCクライアント + MyBatis + MySQL
 
 ### 通信フロー
 
@@ -16,13 +16,18 @@ REST API (domain-layer:8080)
   → gRPC Client 
     → gRPC Server (data-layer:9090) 
       → MyBatis 
-        → H2 Database
+        → MySQL (data-db)
 ```
 
 ## 前提条件
 
+### ローカル実行の場合
 - Java 17以上
-- Gradle 8.5以上（Gradle Wrapperが含まれています）
+- Gradle 8.14以上（Gradle Wrapperが含まれています）
+
+### Docker実行の場合
+- Docker 20.10以上
+- Docker Compose 2.0以上
 
 ## セットアップ
 
@@ -42,7 +47,30 @@ cd ~/demo-grpc
 
 ## 実行方法
 
-### 1. データ層（gRPCサーバ）の起動
+### Docker Composeで実行（推奨）
+
+すべてのサービス（MySQL、data-layer、domain-layer）を一度に起動：
+
+```bash
+cd ~/demo-grpc
+docker-compose up --build
+```
+
+またはバックグラウンドで起動：
+
+```bash
+docker-compose up -d --build
+```
+
+停止：
+
+```bash
+docker-compose down
+```
+
+### ローカル実行
+
+#### 1. データ層（gRPCサーバ）の起動
 
 ```bash
 cd ~/demo-grpc
@@ -51,7 +79,7 @@ cd ~/demo-grpc
 
 データ層はポート **9090** で起動します。
 
-### 2. ドメイン層（REST API + gRPCクライアント）の起動
+#### 2. ドメイン層（REST API + gRPCクライアント）の起動
 
 別のターミナルで：
 
@@ -61,6 +89,8 @@ cd ~/demo-grpc
 ```
 
 ドメイン層はポート **8080** で起動します。
+
+**注意**: ローカル実行の場合は、MySQLを別途起動する必要があります。
 
 ## API エンドポイント
 
@@ -115,12 +145,13 @@ demo-grpc/
 
 ## 主要な技術スタック
 
-- **Spring Boot 3.2.0**
+- **Spring Boot 4.0.0**
 - **gRPC** (grpc-spring-boot-starter)
 - **MyBatis 3.0.3**
-- **H2 Database** (インメモリDB、デモ用)
+- **MySQL 8.0** (Dockerコンテナ)
 - **Lombok**
 - **Gradle 8.5**
+- **Docker & Docker Compose**
 
 ## 用語説明
 

@@ -4,11 +4,15 @@ server:
 spring:
   application:
     name: domain-layer
+  datasource:
+    url: jdbc:mysql://domain-db:3306/demo_grpc?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: rootpassword
 
 grpc:
   client:
     data-layer:
-      address: 'static://localhost:9090'
+      address: 'static://localhost:9090'  # ローカル実行用。Docker Composeでは環境変数で上書き
       negotiationType: plaintext
 
 logging:

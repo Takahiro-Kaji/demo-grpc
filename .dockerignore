@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+build/
+.gradle/
+bin/
+out/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
