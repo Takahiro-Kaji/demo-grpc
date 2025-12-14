@@ -15,3 +15,4 @@ INSERT IGNORE INTO users (user_id, name, email) VALUES
 ('user-002', '佐藤花子', 'sato@example.com'),
 ('user-003', '鈴木一郎', 'suzuki@example.com');
 
+
