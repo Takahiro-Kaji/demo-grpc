@@ -34,3 +34,7 @@ bin/
 # Generated files
 **/build/generated/
 
+# Docker volumes (MySQL data)
+data/mysql-data/
+data/mysql-domain/
+

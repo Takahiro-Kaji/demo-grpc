@@ -4,6 +4,10 @@ plugins {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    
+    // Database (MySQL)
+    runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
     
     // gRPC client dependencies
     implementation 'net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE'
