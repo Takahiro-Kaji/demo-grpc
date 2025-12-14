@@ -5,7 +5,7 @@ services:
     container_name: data-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: demo_grpc
+      MYSQL_DATABASE: demo_grpc_data
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - "3307:3306"
@@ -24,7 +24,7 @@ services:
     container_name: domain-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: demo_grpc
+      MYSQL_DATABASE: demo_grpc_domain
     ports:
       - "3308:3306"
     volumes:
@@ -47,7 +47,7 @@ services:
       data-db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://data-db:3306/demo_grpc?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&useUnicode=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://data-db:3306/demo_grpc_data?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&useUnicode=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
 
@@ -65,7 +65,7 @@ services:
       domain-db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://domain-db:3306/demo_grpc?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://domain-db:3306/demo_grpc_domain?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
       GRPC_CLIENT_DATA_LAYER_ADDRESS: static://data-layer:9090
