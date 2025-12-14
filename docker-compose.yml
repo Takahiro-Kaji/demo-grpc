@@ -25,10 +25,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: demo_grpc_domain
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - "3308:3306"
     volumes:
       - ./data/mysql-domain:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s

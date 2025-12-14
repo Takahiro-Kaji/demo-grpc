@@ -53,19 +53,19 @@ cd ~/demo-grpc
 
 ```bash
 cd ~/demo-grpc
-docker-compose up --build
+docker compose up --build
 ```
 
 またはバックグラウンドで起動：
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 停止：
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### ローカル実行
@@ -104,6 +104,24 @@ curl http://localhost:8080/api/users/user-001
 
 ```bash
 curl http://localhost:8080/api/users?page=1&pageSize=10
+```
+
+### 予約一覧取得
+
+```bash
+curl http://localhost:8080/api/reservations
+```
+
+### ユーザーIDで予約一覧取得
+
+```bash
+curl "http://localhost:8080/api/reservations?userId=user-001"
+```
+
+### 予約1件取得
+
+```bash
+curl http://localhost:8080/api/reservations/1
 ```
 
 ## プロジェクト構造
@@ -176,6 +194,23 @@ demo-grpc/
 ```
 
 を実行して、再ビルドしてください。
+
+### データベースの初期化スクリプトが実行されない場合
+
+既存のデータベースボリュームがある場合、初期化スクリプトは再実行されません。以下のコマンドでボリュームを削除して再作成してください：
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+または、特定のデータベースのみ再作成する場合：
+
+```bash
+docker compose down domain-db
+rm -rf data/mysql-domain/*
+docker compose up -d domain-db
+```
 
 ## 参考資料
 
