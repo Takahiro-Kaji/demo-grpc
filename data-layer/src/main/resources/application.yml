@@ -5,7 +5,7 @@ spring:
   application:
     name: data-layer
   datasource:
-    url: jdbc:mysql://data-db:3306/demo_grpc?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&useUnicode=true
+    url: jdbc:mysql://data-db:3306/demo_grpc_data?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&useUnicode=true
     username: root
     password: rootpassword
   sql:
