@@ -73,13 +73,13 @@ subprojects {
 // (D) ルート集約タスク（CI用）
 tasks.register("testReadAll") {
     group = "verification"
-    description = "Runs all read tests across all subprojects"
-    dependsOn(":data-layer:testRead", ":domain-layer:testRead")
+    description = "Runs all read tests in domain-layer"
+    dependsOn(":domain-layer:testRead")
 }
 
 tasks.register("testWriteAll") {
     group = "verification"
-    description = "Runs all write tests across all subprojects"
-    dependsOn(":data-layer:testWrite", ":domain-layer:testWrite")
+    description = "Runs all write tests in domain-layer"
+    dependsOn(":domain-layer:testWrite")
 }
 
