@@ -24,6 +24,16 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+    
+    // Testcontainers
+    testImplementation 'org.testcontainers:testcontainers:1.19.8'
+    testImplementation 'org.testcontainers:mysql:1.19.8'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
+    
+    // DBRider
+    testImplementation 'com.github.database-rider:rider-junit5:1.43.0'
+    testImplementation 'com.github.database-rider:rider-spring:1.43.0'
 }
 
 protobuf {
@@ -52,6 +62,20 @@ sourceSets {
         java {
             srcDirs 'build/generated/source/proto/main/grpc'
             srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform {
+        // コマンドラインからタグを指定可能
+        // 例: ./gradlew test -PincludeTags=Read
+        // 例: ./gradlew test -PexcludeTags=Slow
+        if (project.hasProperty('includeTags')) {
+            includeTags project.property('includeTags').split(',')
+        }
+        if (project.hasProperty('excludeTags')) {
+            excludeTags project.property('excludeTags').split(',')
         }
     }
 }

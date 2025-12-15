@@ -35,5 +35,51 @@ subprojects {
             extendsFrom annotationProcessor
         }
     }
+    
+    // 既存のtestタスクはread/create/update/deleteを除外（重複防止）
+    tasks.named("test") {
+        useJUnitPlatform {
+            excludeTags("read", "create", "update", "delete")
+        }
+    }
+    
+    // (A) testRead タスク: Readタグのみ実行、JUnit並列ON
+    tasks.register("testRead", Test) {
+        group = "verification"
+        description = "Runs read tests with parallel execution enabled"
+        useJUnitPlatform {
+            includeTags("read")
+        }
+        systemProperties = [
+            "junit.jupiter.execution.parallel.enabled": "true",
+            "junit.jupiter.execution.parallel.mode.default": "concurrent",
+            "junit.jupiter.execution.parallel.mode.classes.default": "concurrent"
+        ]
+    }
+    
+    // (B) testWrite タスク: create/update/deleteタグを実行、JUnit並列OFF
+    tasks.register("testWrite", Test) {
+        group = "verification"
+        description = "Runs write tests (create/update/delete) with parallel execution disabled"
+        useJUnitPlatform {
+            includeTags("create", "update", "delete")
+        }
+        systemProperties = [
+            "junit.jupiter.execution.parallel.enabled": "false"
+        ]
+    }
+}
+
+// (D) ルート集約タスク（CI用）
+tasks.register("testReadAll") {
+    group = "verification"
+    description = "Runs all read tests across all subprojects"
+    dependsOn(":data-layer:testRead", ":domain-layer:testRead")
+}
+
+tasks.register("testWriteAll") {
+    group = "verification"
+    description = "Runs all write tests across all subprojects"
+    dependsOn(":data-layer:testWrite", ":domain-layer:testWrite")
 }
 
