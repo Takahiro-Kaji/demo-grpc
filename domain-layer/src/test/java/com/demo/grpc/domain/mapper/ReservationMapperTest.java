@@ -2,8 +2,6 @@ package com.demo.grpc.domain.mapper;
 
 import com.demo.grpc.domain.AbstractReadMyBatisTest;
 import com.demo.grpc.domain.dto.ReservationDto;
-import com.github.database.rider.core.api.dataset.DataSet;
-import com.github.database.rider.junit5.api.DBRider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,21 +12,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DBRider
 @DisplayName("ReservationMapper テスト")
 class ReservationMapperTest extends AbstractReadMyBatisTest {
-
-    static {
-        // Read専用DBにスキーマと固定seedデータを投入
-        mysql.withInitScript("db/migration/V1__create_reservations_table.sql");
-    }
 
     @Autowired
     private ReservationMapper reservationMapper;
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectAll: すべての予約を取得できる")
     void testSelectAll() {
         // When
@@ -45,7 +36,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectAll: 予約はreservation_idでソートされている")
     void testSelectAll_Ordered() {
         // When
@@ -62,7 +52,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectByUserId: ユーザーIDでフィルタリングして予約を取得できる")
     void testSelectByUserId() {
         // When
@@ -78,7 +67,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectByUserId: ユーザーIDでフィルタリングした結果もreservation_idでソートされている")
     void testSelectByUserId_Ordered() {
         // When
@@ -95,7 +83,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectByUserId: 存在しないユーザーIDの場合は空のリストを返す")
     void testSelectByUserId_NotFound() {
         // When
@@ -108,7 +95,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectById: 予約IDで単一の予約を取得できる")
     void testSelectById() {
         // When
@@ -125,7 +111,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectById: 存在しない予約IDの場合はnullを返す")
     void testSelectById_NotFound() {
         // When
@@ -137,7 +122,6 @@ class ReservationMapperTest extends AbstractReadMyBatisTest {
 
     @Test
     @Tag("read")
-    @DataSet(value = "datasets/reservation/basic.yml", cleanBefore = false)
     @DisplayName("selectByUserId: 最小データセットでも正常に動作する")
     void testSelectByUserId_MinimalDataset() {
         // When

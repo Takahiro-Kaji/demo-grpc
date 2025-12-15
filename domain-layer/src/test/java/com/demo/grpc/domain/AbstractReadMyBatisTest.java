@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * 
  * 運用ルール:
  * - Readテストクラス/メソッドには @Tag("read") を付与
- * - @DataSet の cleanBefore は false に設定（固定seedデータを使用）
+ * - コンテナ起動時に初期化スクリプトで固定seedデータが投入されるため、@DataSet は不要
  * - 並列実行可能（CI側でJUnit並列実行がON）
  */
 @SpringBootTest
@@ -34,7 +34,8 @@ public abstract class AbstractReadMyBatisTest {
                 .withDatabaseName(TestContainersConfig.MYSQL_DATABASE + "_" + databaseSuffix)
                 .withUsername(TestContainersConfig.MYSQL_USERNAME)
                 .withPassword(TestContainersConfig.MYSQL_PASSWORD)
-                .withCommand("--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci");
+                .withCommand("--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci")
+                .withInitScript("db/migration/V1__create_reservations_table.sql");
     }
 
     @DynamicPropertySource
@@ -49,4 +50,3 @@ public abstract class AbstractReadMyBatisTest {
         registry.add("grpc.client.data-layer.address", () -> "static://localhost:9090");
     }
 }
-
